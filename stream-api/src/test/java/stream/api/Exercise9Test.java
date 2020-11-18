@@ -8,6 +8,7 @@ import common.test.tool.util.CollectorImpl;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -19,6 +20,8 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
@@ -34,12 +37,12 @@ public class Exercise9Test extends ClassicOnlineStore {
          * Implement a {@link Collector} which can create a String with comma separated names shown in the assertion.
          * The collector will be used by serial stream.
          */
-        Supplier<Object> supplier = null;
-        BiConsumer<Object, String> accumulator = null;
-        BinaryOperator<Object> combiner = null;
-        Function<Object, String> finisher = null;
+        Supplier<List<String>> supplier = ArrayList::new;
+        BiConsumer<List<String>, String> accumulator = List::add;
+        BinaryOperator<List<String>> combiner = null;
+        Function<List<String>, String> finisher = container -> String.join(",", container);
 
-        Collector<String, ?, String> toCsv =
+        Collector<String, List<String>, String> toCsv =
             new CollectorImpl<>(supplier, accumulator, combiner, finisher, Collections.emptySet());
         String nameAsCsv = customerList.stream().map(Customer::getName).collect(toCsv);
         assertThat(nameAsCsv, is("Joe,Steven,Patrick,Diana,Chris,Kathy,Alice,Andrew,Martin,Amy"));
