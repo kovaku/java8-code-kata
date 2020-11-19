@@ -39,7 +39,7 @@ public class Exercise2Test {
         /**
          * Create a {@link LocalTime} of 23:07:03.1 from String by using {@link LocalTime#parse}
          */
-        LocalTime localTime = LocalTime.parse("23:07:03.10000000000");
+        LocalTime localTime = LocalTime.parse("23:07:03.100000000");
 
         assertThat(localTime.toString(), is("23:07:03.100"));
     }
@@ -98,7 +98,7 @@ public class Exercise2Test {
          * Define a {@link Duration} of 3 hours 30 minutes and 20.2 seconds
          * Create a {@link LocalTime} subtracting the duration from {@link lt} by using {@link LocalTime#minus}
          */
-        Duration duration = Duration.ofHours(3).plusMinutes(30).plusSeconds(20).plusNanos(2);
+        Duration duration = Duration.ofHours(3).plusMinutes(30).plusSeconds(20).plusNanos(200000000);
         LocalTime localTime = lt.minus(duration);
 
         assertThat(localTime.getHour(), is(19));
